@@ -4,17 +4,16 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-07 23:11:55 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-07 23:36:55
+ * @Last Modified time: 2019-03-08 23:41:46
  * @Types 用户数据
  */
 
 
 
-import mongoose from 'mongoose'
+import mongoose from '../mongoose/mongo'
+var Schema = mongoose.Schema
 
-
-
-const userSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     //名字
     name: {
         type: String,
@@ -43,6 +42,6 @@ const userSchema = new mongoose.Schema({
 })
 
 
-const user = mongoose.model('user', userSchema)
+const User = mongoose.model('User', UserSchema)
 
-export default user
+export default User

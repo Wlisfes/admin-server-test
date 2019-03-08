@@ -4,14 +4,14 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-05 22:14:49 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-07 23:53:10
+ * @Last Modified time: 2019-03-09 00:24:36
  * @Types 首页路由
  */
 
 
 
 import Router from 'koa-router'
-import user from '../Model/user'
+import User from '../Model/user'
 
 
 
@@ -21,36 +21,46 @@ router.get('/', async (ctx) => {
     ctx.body = `<h1 style="font-size: 48px;text-align: center;">Hello World</h1>`
 })
 
+
+//新增数据
 router.get('/user/set', async (ctx) => {
-    let ops = {
-        name: 'limvc',
-        username: '情雨随风',
-        password: '000000',
-        gravatar: 'https://p2.music.126.net/dkwzyF8mm10AptZNSOqzdA==/109951162892007217.jpg',
-        gender: 1
-    }
+    let user = new User({
+            name: 'limvc',
+            username: '情雨随风',
+            password: '000000',
+            gravatar: 'https://p2.music.126.net/dkwzyF8mm10AptZNSOqzdA==/109951162892007217.jpg',
+            gender: 1
+        })
 
-    try {
-        let res = await user.insert(ops)
-        ctx.body = {
-            code: 200,
-            msg: '存入成功',
-            data: res
-        }
-    } catch (error) {
-        ctx.body = {
-            code: 0,
-            msg: '存入失败'
-        }
-    }
+    let res = await user.save()
 
+    ctx.body = res
 })
 
 
+//查询数据
 router.get('/user/get', async (ctx) => {
-    let res = await user.find({
-        name: 'limvc'
-    })
+    let res = await User.find({})
+
+    ctx.body = res
+})
+
+
+//删除数据
+router.get('/user/delete', async (ctx) => {
+    let res = await User.remove({
+            name: 'limvc'
+        })
+    
+    ctx.body = res
+})
+
+
+//修改数据
+router.get('/user/update', async (ctx) => {
+    let res = await User.update(
+                    { name: 'limvc1' },
+                    { password: '123456' })
 
     ctx.body = res
 })
