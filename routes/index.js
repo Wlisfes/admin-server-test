@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-05 22:14:49 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-09 00:24:36
+ * @Last Modified time: 2019-03-10 23:51:47
  * @Types 首页路由
  */
 
@@ -34,7 +34,11 @@ router.get('/user/set', async (ctx) => {
 
     let res = await user.save()
 
-    ctx.body = res
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
 })
 
 

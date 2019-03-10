@@ -2,7 +2,7 @@
 
 import Koa from 'koa'
 import logger from 'koa-logger'
-
+import cors from 'koa-cors'
 
 
 import index from './routes/index'
@@ -12,6 +12,7 @@ const app = new Koa()
 
 //日志中间件
 app.use(logger())
+app.use(cors())
 
 
 //路由挂载
