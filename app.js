@@ -30,14 +30,15 @@ app.use(bodyparser({
 }))
 
 
-import index from './routes/index'
-import user from './routes/user'
+import routerIndex from './routes/index'
+import routerUser from './routes/user'
+import routerItem from './routes/item'
 
 
 //路由挂载
-app.use(index.routes(), index.allowedMethods())
-app.use(user.routes(), user.allowedMethods())
-
+app.use(routerIndex.routes(), routerIndex.allowedMethods())
+app.use(routerUser.routes(), routerUser.allowedMethods())
+app.use(routerItem.routes(), routerItem.allowedMethods())
 
 
 
