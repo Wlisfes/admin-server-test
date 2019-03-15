@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-14 20:24:35 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-14 23:12:49
+ * @Last Modified time: 2019-03-15 17:25:36
  * @Types 项目数据
  */
 
@@ -12,6 +12,10 @@
 import db from '../mongo/db'
 
 const Item = new db.Schema({
+    //id
+    id: {
+        type: db.Schema.Types.ObjectId
+    },
     //项目名称
     name: {
         type: String,

@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-14 22:59:51 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-14 23:05:28
+ * @Last Modified time: 2019-03-15 17:34:11
  * @Types 用户模块操作
  */
 
@@ -56,7 +56,7 @@ router.get('/user/delete', async (ctx) => {
 //修改数据
 router.get('/user/update', async (ctx) => {
     let res = await User.update(
-                    { name: 'limvc1' },
+                    { name: 'limvc' },
                     { password: '123456' })
 
     ctx.body = res
