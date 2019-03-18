@@ -7,7 +7,7 @@ import logger from 'koa-logger'
 import bodyparser from 'koa-bodyparser'
 import onerror from 'koa-onerror'
 import cors from 'koa-cors'
-
+import Router from './routes/index'
 
 const app = new Koa()
 
@@ -29,19 +29,8 @@ app.use(bodyparser({
     enableTypes:['json', 'form', 'text']
 }))
 
-
-import routerIndex from './routes/index'
-import routerUser from './routes/user'
-import routerItem from './routes/item'
-
-
-//路由挂载
-app.use(routerIndex.routes(), routerIndex.allowedMethods())
-app.use(routerUser.routes(), routerUser.allowedMethods())
-app.use(routerItem.routes(), routerItem.allowedMethods())
-
-
-
+//router初始化
+new Router(app).init()
 
 
 //错误监听
