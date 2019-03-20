@@ -4,7 +4,7 @@
  * @Author: Parker 
  * @Date: 2019-03-18 16:53:06 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-19 22:35:19
+ * @Last Modified time: 2019-03-20 22:40:58
  * @Types 文章操作
  */
 
@@ -17,20 +17,19 @@ const router = Router()
 
 //添加文章
 router.post('/tubok/set', async (ctx) => {
-    let { content } = ctx.request.body
-
+    let { content,title,descript,types,image } = ctx.request.body
     let ops = {
-        title: 'vue-Markdown编辑器',
+        title: title,
         //描述
-        descript: `一款使用marked和highlight.js开发的一款markdown编辑器，目前只支持在vue项目中使用。 编辑器涵盖了常用的markdown编辑器功能，工具栏可自定义配置，也可进行二次开发。`,
+        descript: descript,
         //类型
-        types: 'vuejs',
+        types: types,
         //内容
         content: content,
         //未发布
         status: false,
         //缩略图
-        image: 'https://avatars3.githubusercontent.com/u/10137653?s=400&v=4',
+        image: image,
     }
     let tubok = new Tubok(ops)
     let res = await tubok.save()
@@ -100,9 +99,19 @@ router.post('/update/tubokstatus/id', async(ctx) => {
 //根据id修改文章是否为草稿
 router.post('/update/tubokdraft/id', async(ctx) => {
     let { _id,draft } = ctx.request.body
-    await Tubok.update({ _id: _id },{ draft: draft })
-    let res = await Tubok.find({ draft: false })
-
+    let t = draft ? false : true
+    if(!draft) {
+        //false为草稿转文章
+        await Tubok.update({ _id: _id },{ 
+            draft: draft,
+            status: false
+        })
+    } else {
+        //true为文章转草稿
+        await Tubok.update({ _id: _id },{ draft: draft })
+    }
+    
+    let res = await Tubok.find({ draft: t })
     ctx.body = {
         code: 200,
         data: res,
@@ -116,7 +125,7 @@ router.post('/update/tubokdraft/id', async(ctx) => {
 router.get('/tubok/delete/id', async(ctx) => {
     let { _id } = ctx.query
     await Tubok.remove({ _id: _id })
-    let res = await Tubok.find({ draft: false })
+    let res = await Tubok.find({ draft: true })
     
     ctx.body = {
         code: 200,
