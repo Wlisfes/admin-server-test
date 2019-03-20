@@ -20,9 +20,9 @@ router.post('/tubok/set', async (ctx) => {
     let { content } = ctx.request.body
 
     let ops = {
-        title: 'ElementUI 之 Tree 组件切换全局 disabled',
+        title: 'vue-Markdown编辑器',
         //描述
-        descript: `到 ElementUI 2.4.8 为止，Tree 组件还不能一次性控制所有节点是否可选，这里做了实验性的尝试，在切换全局 disabled 的同时，保留每个节点原本的 disabled 状态，做到可恢复。`,
+        descript: `一款使用marked和highlight.js开发的一款markdown编辑器，目前只支持在vue项目中使用。 编辑器涵盖了常用的markdown编辑器功能，工具栏可自定义配置，也可进行二次开发。`,
         //类型
         types: 'vuejs',
         //内容
@@ -45,7 +45,7 @@ router.post('/tubok/set', async (ctx) => {
 
 
 //获取全部文章
-router.get('/tubok/get', async(ctx) => {
+router.get('/tubok/get/all', async(ctx) => {
     let res = await Tubok.find({ draft: false })
 
     ctx.body = {
@@ -72,7 +72,7 @@ router.get('/tubok/get/id', async(ctx) => {
 
 
 //获取全部草稿
-router.get('/tubok/get', async(ctx) => {
+router.get('/tubok/draft/all', async(ctx) => {
     let res = await Tubok.find({ draft: true })
 
     ctx.body = {
@@ -83,12 +83,25 @@ router.get('/tubok/get', async(ctx) => {
 })
 
 
+//根据id修改文章是否发布
+router.post('/update/tubokstatus/id', async(ctx) => {
+    let { _id,status } = ctx.request.body
+    await Tubok.update({ _id: _id }, { status: status })
+    let res = await Tubok.find({ draft: false })
 
-//修改文章是否为草稿
-router.post('/tubok/update', async(ctx) => {
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
+})
+
+
+//根据id修改文章是否为草稿
+router.post('/update/tubokdraft/id', async(ctx) => {
     let { _id,draft } = ctx.request.body
-    await Tubok.update({ _id: _id }, { draft: draft })
-    let res = await Tubok.find({})
+    await Tubok.update({ _id: _id },{ draft: draft })
+    let res = await Tubok.find({ draft: false })
 
     ctx.body = {
         code: 200,
@@ -100,10 +113,10 @@ router.post('/tubok/update', async(ctx) => {
 
 
 //删除草稿
-router.get('/tubok/delete', async(ctx) => {
+router.get('/tubok/delete/id', async(ctx) => {
     let { _id } = ctx.query
     await Tubok.remove({ _id: _id })
-    let res = await Tubok.find({})
+    let res = await Tubok.find({ draft: false })
     
     ctx.body = {
         code: 200,

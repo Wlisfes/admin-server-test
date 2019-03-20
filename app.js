@@ -19,7 +19,13 @@ onerror(app)
 app.use(logger())
 
 //cors跨域处理
-app.use(cors())
+app.use(cors({
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization', 'Date'],
+    maxAge: 100,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Custom-Header', 'anonymous'],
+}))
 
 //json格式化
 app.use(json())
