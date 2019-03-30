@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-14 22:09:20 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-18 20:54:53
+ * @Last Modified time: 2019-03-31 00:43:46
  * @Types 项目模块操作
  */
 
@@ -40,6 +40,32 @@ router.get('/item/get', async(ctx) => {
 })
 
 
+//获取已发布的项目
+router.get('/item/release', async(ctx) => {
+    let res = await Item.find({ status: true })
+
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
+})
+
+
+//根据类型获取已发布的项目
+router.get('/item/types', async(ctx) => {
+    let { types } = ctx.query
+
+    let res = await Item.find({ types: types, status: true })
+
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
+})
+
+
 //修改项目
 router.post('/item/update', async(ctx) => {
     let { _id } = ctx.request.body
@@ -66,5 +92,8 @@ router.get('/item/delete', async(ctx) => {
         message: 'ok'
     }
 })
+
+
+
 
 export default router

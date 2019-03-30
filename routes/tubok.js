@@ -4,7 +4,7 @@
  * @Author: Parker 
  * @Date: 2019-03-18 16:53:06 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-20 22:40:58
+ * @Last Modified time: 2019-03-31 00:58:42
  * @Types 文章操作
  */
 
@@ -46,6 +46,35 @@ router.post('/tubok/set', async (ctx) => {
 //获取全部文章
 router.get('/tubok/get/all', async(ctx) => {
     let res = await Tubok.find({ draft: false })
+
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
+})
+
+
+//获取已发布的文章
+router.get('/tubok/release', async(ctx) => {
+    let res = await Tubok.find({ draft: false, status: true })
+
+    ctx.body = {
+        code: 200,
+        data: res,
+        message: 'ok'
+    }
+})
+
+
+//根据类型获取已发布的文章
+router.get('/tubok/types', async(ctx) => {
+    let { types } = ctx.query
+    let res = await Tubok.find({
+        draft: false,
+        status: true,
+        types: types
+    })
 
     ctx.body = {
         code: 200,
