@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-14 22:09:20 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-03-18 16:54:40
+ * @Last Modified time: 2019-03-31 13:28:31
  * @Types 路由首页
  */
 
@@ -13,6 +13,8 @@ import KoaRouter from 'koa-router'
 import item from './item'
 import user from './user'
 import tubok from './tubok'
+import label from './label'
+import notes from './notes'
 
 export default class Router {
     constructor(app) {
@@ -36,6 +38,8 @@ export default class Router {
         this.app.use(item.routes(), item.allowedMethods())
         this.app.use(user.routes(), user.allowedMethods())
         this.app.use(tubok.routes(), tubok.allowedMethods())
-        
+        this.app.use(label.routes(), label.allowedMethods())
+        this.app.use(notes.routes(), notes.allowedMethods())
+
     }
 }
