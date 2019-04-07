@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-31 13:26:51 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-04-06 01:36:57
+ * @Last Modified time: 2019-04-06 12:41:44
  * @Types 笔记模块操作
  */
 
@@ -18,6 +18,8 @@ const router = Router()
 //新增笔记
 router.post('/notes/set', async (ctx) => {
     let ops = ctx.request.body
+    let label = await Label.find({ name: ops.types })
+        ops.color = label[0].color
     let notes = new Notes(ops)
     let res = await notes.save()
     ctx.body = {

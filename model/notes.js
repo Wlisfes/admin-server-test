@@ -4,7 +4,7 @@
  * @Author: 情雨随风 
  * @Date: 2019-03-31 13:22:53 
  * @Last Modified by: Parker
- * @Last Modified time: 2019-04-05 19:14:03
+ * @Last Modified time: 2019-04-06 12:29:34
  * @Types 笔记数据
  */
 
@@ -20,6 +20,11 @@ const Notes = new db.Schema({
     types: {
         type: String,
         required: true
+    },
+    //标签颜色
+    color: {
+        type: String,
+        default: '#C7BFFC'
     },
     //内容
     content: {
